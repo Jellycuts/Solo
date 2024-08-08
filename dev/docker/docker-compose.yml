@@ -1,0 +1,23 @@
+version: '3'
+services:
+  jellycuts:
+    image: ghost:latest
+    restart: always
+    ports:
+      - 3002:2368  # Use a different port than the first blog
+    environment:
+      url: http://localhost:3006  # Use a different URL than the first blog
+      database__client: sqlite3
+      database__connection__filename: /var/lib/ghost/content/data/jellycuts.db  # Different DB file name
+    networks:
+      - routinehub-network  # Different network name
+    volumes:
+      - jellycuts_content:/var/lib/ghost/content  # Different volume
+      - ~/WebstormProjects/jellycuts/www.jellycuts.com/content/themes/solo:/var/lib/ghost/content/themes/solo  # Different theme path
+
+volumes:
+  jellycuts_content:
+
+networks:
+  jellycuts-network:
+    driver: bridge
